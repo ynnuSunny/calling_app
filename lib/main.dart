@@ -34,6 +34,7 @@ class VideoCallApp extends StatelessWidget {
         colorScheme: const ColorScheme.dark(),
       ),
       themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
       home: JoinScreen(selfCallerId: selfCallerID),
     );
   }
