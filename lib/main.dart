@@ -17,7 +17,7 @@ class VideoCallApp extends StatelessWidget {
 
   // generate callerID of local user
   final String selfCallerID =
-  Random().nextInt(999999).toString().padLeft(6, '0');
+      Random().nextInt(999999).toString().padLeft(6, '0');
 
   @override
   Widget build(BuildContext context) {
