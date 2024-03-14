@@ -38,7 +38,7 @@ class _JoinScreenState extends State<JoinScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => CallScreen(
+        builder: (_) => CallScreenDriver(
           callerId: callerId,
           calleeId: calleeId,
           offer: offer,
@@ -103,10 +103,9 @@ class _JoinScreenState extends State<JoinScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CallScreenDriver()),
+                          _joinCall(
+                            callerId: widget.selfCallerId,
+                            calleeId: remoteCallerIdTextEditingController.text,
                           );
                         }),
                   ],

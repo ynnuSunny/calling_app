@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import '../../components/colors.dart';
 
 class CallScreenDriver extends StatefulWidget {
-  const CallScreenDriver({super.key});
+  final String callerId, calleeId;
+  final dynamic offer;
+  const CallScreenDriver({
+    super.key,
+    this.offer,
+    required this.callerId,
+    required this.calleeId,
+  });
 
   @override
   State<CallScreenDriver> createState() => _CallScreenState();
@@ -54,7 +61,7 @@ class _CallScreenState extends State<CallScreenDriver> {
             height: size.height * 0.04,
           ),
           Text(
-            "CalleID",
+            "CalleID: $callerId",
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 20 * MediaQuery.of(context).textScaleFactor,
