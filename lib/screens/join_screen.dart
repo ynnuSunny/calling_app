@@ -112,7 +112,7 @@ class _JoinScreenState extends State<JoinScreen> {
                 ),
               ),
             ),
-            if (incomingSDPOffer != null) // logic for imcoming call
+            if (incomingSDPOffer != null)
               Positioned(
                 child: ListTile(
                   title: Text(
