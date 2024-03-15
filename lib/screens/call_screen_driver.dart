@@ -61,7 +61,7 @@ class _CallScreenState extends State<CallScreenDriver> {
             height: size.height * 0.04,
           ),
           Text(
-            "CalleID: $callerId",
+            "CalleID",
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 20 * MediaQuery.of(context).textScaleFactor,
