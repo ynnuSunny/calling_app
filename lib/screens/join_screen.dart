@@ -24,6 +24,9 @@ class _JoinScreenState extends State<JoinScreen> {
       if (mounted) {
         // set SDP Offer of incoming call
         setState(() => incomingSDPOffer = data);
+        print("line 27");
+        print(incomingSDPOffer);
+        print("line 29");
       }
     });
   }
