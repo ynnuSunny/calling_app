@@ -36,7 +36,7 @@ class _CallScreenState extends State<CallScreen> {
   List<RTCIceCandidate> rtcIceCadidates = [];
 
   // media status
-  bool isAudioOn = true, isVideoOn = false, isFrontCameraSelected = true;
+  bool isAudioOn = true;
 
   @override
   void initState() {
@@ -78,9 +78,6 @@ class _CallScreenState extends State<CallScreen> {
     // get localStream
     _localStream = await navigator.mediaDevices.getUserMedia({
       'audio': isAudioOn,
-      'video': isVideoOn
-          ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
-          : false,
     });
 
     // add mediaTrack to peerConnection
@@ -182,29 +179,6 @@ class _CallScreenState extends State<CallScreen> {
     setState(() {});
   }
 
-  // _toggleCamera() {
-  //   // change status
-  //   isVideoOn = !isVideoOn;
-  //
-  //   // enable or disable video track
-  //   _localStream?.getVideoTracks().forEach((track) {
-  //     track.enabled = isVideoOn;
-  //   });
-  //   setState(() {});
-  // }
-
-  // _switchCamera() {
-  //   // change status
-  //   isFrontCameraSelected = !isFrontCameraSelected;
-  //
-  //   // switch camera
-  //   _localStream?.getVideoTracks().forEach((track) {
-  //     // ignore: deprecated_member_use
-  //     track.switchCamera();
-  //   });
-  //   setState(() {});
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,7 +203,6 @@ class _CallScreenState extends State<CallScreen> {
                     width: 120,
                     child: RTCVideoView(
                       _localRTCVideoRenderer,
-                      mirror: isFrontCameraSelected,
                       objectFit:
                           RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                     ),
@@ -251,14 +224,6 @@ class _CallScreenState extends State<CallScreen> {
                     iconSize: 30,
                     onPressed: _leaveCall,
                   ),
-                  // IconButton(
-                  //   icon: const Icon(Icons.cameraswitch),
-                  //   onPressed: _switchCamera,
-                  // ),
-                  // IconButton(
-                  //   icon: Icon(isVideoOn ? Icons.videocam : Icons.videocam_off),
-                  //   onPressed: _toggleCamera,
-                  // ),
                 ],
               ),
             ),
