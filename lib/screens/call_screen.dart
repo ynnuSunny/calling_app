@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import '../components/colors.dart';
 import '../services/signalling.service.dart';
 
 class CallScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _CallScreenState extends State<CallScreen> {
   List<RTCIceCandidate> rtcIceCadidates = [];
 
   // media status
-  bool isAudioOn = true, isVideoOn = false, isFrontCameraSelected = true;
+  bool isAudioOn = true;
 
   @override
   void initState() {
@@ -62,8 +63,8 @@ class _CallScreenState extends State<CallScreen> {
       'iceServers': [
         {
           'urls': [
-            'stun:stun1.l.google.com:19302',
-            'stun:stun2.l.google.com:19302'
+            'stun:stun3.l.google.com:19302',
+            'stun:stun4.l.google.com:19302'
           ]
         }
       ]
@@ -78,9 +79,6 @@ class _CallScreenState extends State<CallScreen> {
     // get localStream
     _localStream = await navigator.mediaDevices.getUserMedia({
       'audio': isAudioOn,
-      'video': isVideoOn
-          ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
-          : false,
     });
 
     // add mediaTrack to peerConnection
@@ -182,9 +180,9 @@ class _CallScreenState extends State<CallScreen> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -192,44 +190,118 @@ class _CallScreenState extends State<CallScreen> {
       ),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Stack(children: [
-                RTCVideoView(
-                  _remoteRTCVideoRenderer,
-                  objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                ),
-                Positioned(
-                  right: 20,
-                  bottom: 20,
-                  child: SizedBox(
-                    height: 150,
-                    width: 120,
-                    child: RTCVideoView(
-                      _localRTCVideoRenderer,
-                      mirror: isFrontCameraSelected,
-                      objectFit:
-                      RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+            SizedBox(
+              height: size.height * 0.1,
+            ),
+            Text(
+              widget.calleeId,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16 * MediaQuery.of(context).textScaleFactor,
+                color: ColorList.deliveryDetailsDailyTitleColor,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            Text(
+              "03:12",
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16 * MediaQuery.of(context).textScaleFactor,
+                color: ColorList.deliveryDetailsDailyTitleColor,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            Image.asset('assets/images/call.png'),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            // Text(
+            //   "Connected",
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.w400,
+            //     fontSize: 14 * MediaQuery.of(context).textScaleFactor,
+            //     color: ColorList.deliveryDetailsDailyTitleColor,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: size.height * 0.04,
+            // ),
+            // Text(
+            //   "CalleID",
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.w700,
+            //     fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+            //     color: ColorList.deliveryDetailsDailyTitleColor,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: size.height * 0.10,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: _toggleMic,
+                  child: Container(
+                    width: size.width * 0.19,
+                    height: size.height * 0.18,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorList.darkGrey,
+                    ),
+                    child: Center(
+                      child: Image.asset('assets/images/call_sound.png'),
                     ),
                   ),
-                )
-              ]),
+                ),
+                SizedBox(
+                  width: size.width * 0.08,
+                ),
+                GestureDetector(
+                  onTap: _toggleMic,
+                  child: Container(
+                    width: size.width * 0.19,
+                    height: size.height * 0.18,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorList.darkGrey,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        isAudioOn ? Icons.mic : Icons.mic_off,
+                        size: 34,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: Icon(isAudioOn ? Icons.mic : Icons.mic_off),
-                    onPressed: _toggleMic,
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            GestureDetector(
+              onTap: _leaveCall,
+              child: Container(
+                width: size.width * 0.19,
+                height: size.height * 0.16,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorList.lightRed,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.call_end_rounded,
+                    color: Colors.white,
+                    size: 33,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.call_end),
-                    iconSize: 30,
-                    onPressed: _leaveCall,
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -237,6 +309,7 @@ class _CallScreenState extends State<CallScreen> {
       ),
     );
   }
+
 
   @override
   void dispose() {
