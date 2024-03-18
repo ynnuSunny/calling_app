@@ -13,7 +13,7 @@ class VideoCallApp extends StatelessWidget {
   VideoCallApp({super.key});
 
   // signalling server url
-  final String websocketUrl = "https://signalling-server-8qah.onrender.com";
+  final String websocketUrl = "https://signalling-server-8qah.onrender.com/";
 
   // generate callerID of local user
   final String selfCallerID =
