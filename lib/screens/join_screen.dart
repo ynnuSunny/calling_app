@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'call_screen.dart';
 import '../services/signalling.service.dart';
+import 'call_screen_driver.dart';
 
 class JoinScreen extends StatefulWidget {
   final String selfCallerId;
@@ -40,7 +41,7 @@ class _JoinScreenState extends State<JoinScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => CallScreen(
+        builder: (_) => CallScreenDriver(
           callerId: callerId,
           calleeId: calleeId,
           offer: offer,
@@ -94,23 +95,22 @@ class _JoinScreenState extends State<JoinScreen> {
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        side: const BorderSide(color: Colors.white30),
-                      ),
-                      child: const Text(
-                        "Invite",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
+                        style: ElevatedButton.styleFrom(
+                          side: const BorderSide(color: Colors.white30),
                         ),
-                      ),
-                      onPressed: () {
-                        _joinCall(
-                          callerId: widget.selfCallerId,
-                          calleeId: remoteCallerIdTextEditingController.text,
-                        );
-                      },
-                    ),
+                        child: const Text(
+                          "Invite",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        onPressed: () {
+                          _joinCall(
+                            callerId: widget.selfCallerId,
+                            calleeId: remoteCallerIdTextEditingController.text,
+                          );
+                        }),
                   ],
                 ),
               ),
