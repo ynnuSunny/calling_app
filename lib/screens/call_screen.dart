@@ -22,10 +22,10 @@ class _CallScreenState extends State<CallScreen> {
   final socket = SignallingService.instance.socket;
 
   // videoRenderer for localPeer
-  final _localRTCVideoRenderer = RTCVideoRenderer();
+  final _localRTCRenderer = RTCVideoRenderer();
 
   // videoRenderer for remotePeer
-  final _remoteRTCVideoRenderer = RTCVideoRenderer();
+  final _remoteRTCRenderer = RTCVideoRenderer();
 
   // mediaStream for localPeer
   MediaStream? _localStream;
@@ -38,12 +38,13 @@ class _CallScreenState extends State<CallScreen> {
 
   // media status
   bool isAudioOn = true;
+  bool isOtherInCall = true;
 
   @override
   void initState() {
     // initializing renderers
-    _localRTCVideoRenderer.initialize();
-    _remoteRTCVideoRenderer.initialize();
+    _localRTCRenderer.initialize();
+    _remoteRTCRenderer.initialize();
 
     // setup Peer Connection
     _setupPeerConnection();
@@ -63,7 +64,8 @@ class _CallScreenState extends State<CallScreen> {
       'iceServers': [
         {
           'urls': [
-            'stun:stun3.l.google.com:19302',
+            // 'stun1.voiceeclipse.net:3478'
+            // 'stun:global.stun.twilio.com:3478',
             'stun:stun4.l.google.com:19302'
           ]
         }
@@ -72,7 +74,7 @@ class _CallScreenState extends State<CallScreen> {
 
     // listen for remotePeer mediaTrack event
     _rtcPeerConnection!.onTrack = (event) {
-      _remoteRTCVideoRenderer.srcObject = event.streams[0];
+      _remoteRTCRenderer.srcObject = event.streams[0];
       setState(() {});
     };
 
@@ -87,7 +89,7 @@ class _CallScreenState extends State<CallScreen> {
     });
 
     // set source for local video renderer
-    _localRTCVideoRenderer.srcObject = _localStream;
+    _localRTCRenderer.srcObject = _localStream;
     setState(() {});
 
     // for Incoming call
@@ -251,8 +253,8 @@ class _CallScreenState extends State<CallScreen> {
                   child: Container(
                     width: size.width * 0.19,
                     height: size.height * 0.18,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
+                    decoration: const BoxDecoration(
+                      shape:  BoxShape.circle,
                       color: ColorList.darkGrey,
                     ),
                     child: Center(
@@ -268,7 +270,7 @@ class _CallScreenState extends State<CallScreen> {
                   child: Container(
                     width: size.width * 0.19,
                     height: size.height * 0.18,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: ColorList.darkGrey,
                     ),
@@ -291,11 +293,11 @@ class _CallScreenState extends State<CallScreen> {
               child: Container(
                 width: size.width * 0.19,
                 height: size.height * 0.16,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: ColorList.lightRed,
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.call_end_rounded,
                     color: Colors.white,
@@ -313,8 +315,8 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void dispose() {
-    _localRTCVideoRenderer.dispose();
-    _remoteRTCVideoRenderer.dispose();
+    _localRTCRenderer.dispose();
+    _remoteRTCRenderer.dispose();
     _localStream?.dispose();
     _rtcPeerConnection?.dispose();
     super.dispose();
