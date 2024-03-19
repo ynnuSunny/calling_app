@@ -233,7 +233,7 @@ class _CallScreenState extends State<CallScreen> {
             ),
             Image.asset('assets/images/call.png'),
             SizedBox(
-              height: size.height * 0.04,
+              height: size.height * 0.08,
             ),
             // Text(
             //   "Connected",
@@ -260,23 +260,21 @@ class _CallScreenState extends State<CallScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: _toggleMic,
-                  child: Container(
-                    width: size.width * 0.19,
-                    height: size.height * 0.18,
-                    decoration: const BoxDecoration(
-                      shape:  BoxShape.circle,
-                      color: ColorList.darkGrey,
-                    ),
-                    child: Center(
-                      child: Image.asset('assets/images/call_sound.png'),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: size.width * 0.08,
-                ),
+                // GestureDetector(
+                //   onTap: _toggleMic,
+                //   child: Container(
+                //     width: size.width * 0.19,
+                //     height: size.height * 0.18,
+                //     decoration: const BoxDecoration(
+                //       shape:  BoxShape.circle,
+                //       color: ColorList.darkGrey,
+                //     ),
+                //     child: Center(
+                //       child: Image.asset('assets/images/call_sound.png'),
+                //     ),
+                //   ),
+                // ),
+
                 GestureDetector(
                   onTap: _toggleMic,
                   child: Container(
@@ -295,29 +293,31 @@ class _CallScreenState extends State<CallScreen> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.04,
-            ),
-            GestureDetector(
-              onTap: _leaveCall,
-              child: Container(
-                width: size.width * 0.19,
-                height: size.height * 0.16,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorList.lightRed,
+                SizedBox(
+                  width: size.width * 0.08,
                 ),
-                child: const Center(
-                  child: Icon(
-                    Icons.call_end_rounded,
-                    color: Colors.white,
-                    size: 33,
+                GestureDetector(
+                  onTap: _leaveCall,
+                  child: Container(
+                    width: size.width * 0.19,
+                    height: size.height * 0.16,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorList.lightRed,
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.call_end_rounded,
+                        color: Colors.white,
+                        size: 33,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
+
+
           ],
         ),
       ),
