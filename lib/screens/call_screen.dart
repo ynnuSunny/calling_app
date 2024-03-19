@@ -43,12 +43,16 @@ class _CallScreenState extends State<CallScreen> {
   @override
   void initState() {
     // initializing renderers
-    _localRTCRenderer.initialize();
-    _remoteRTCRenderer.initialize();
+    _initializeRenderers();
 
     // setup Peer Connection
     _setupPeerConnection();
     super.initState();
+  }
+
+  void _initializeRenderers() async {
+    await _localRTCRenderer.initialize();
+    await _remoteRTCRenderer.initialize();
   }
 
   @override
@@ -63,10 +67,17 @@ class _CallScreenState extends State<CallScreen> {
     _rtcPeerConnection = await createPeerConnection({
       'iceServers': [
         {
+          'urls': 'turn:relay1.expressturn.com:3478',
+          'credential': 'IVjI7zDT70q8ELRr',
+          'username': 'ef5UQOZRG5ZSIS9PJB',
+        },
+        {
           'urls': [
             // 'stun1.voiceeclipse.net:3478'
             // 'stun:global.stun.twilio.com:3478',
-            'stun:stun4.l.google.com:19302'
+            // 'stun:stun4.l.google.com:19302'
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302'
           ]
         }
       ]
@@ -181,6 +192,7 @@ class _CallScreenState extends State<CallScreen> {
     });
     setState(() {});
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -319,6 +331,7 @@ class _CallScreenState extends State<CallScreen> {
     _remoteRTCRenderer.dispose();
     _localStream?.dispose();
     _rtcPeerConnection?.dispose();
+    // Dispose of socket listeners if necessary
     super.dispose();
   }
 }
