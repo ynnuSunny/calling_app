@@ -68,14 +68,14 @@ class _CallScreenState extends State<CallScreen> {
   Widget build(BuildContext context) {
     return ZegoUIKitPrebuiltCall(
       appID:
-      148227994, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
+      1607082361, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
       appSign:
-      '3f0929b2883c17e55776fbe1b5366a0b990b0e63b956c95cb6a3c45bb595934a', // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+      'e99c58c1857a0a48f573dffd8c691df72e83a8dd8534917d783042447ebab7a6', // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
       userID: caller,
       userName: caller,
       callID: callee,
       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
-      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
+      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall(),
     );
   }
 }
