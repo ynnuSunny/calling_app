@@ -108,6 +108,7 @@ class _JoinScreenState extends State<JoinScreen> {
                         _joinCall(
                           callerId: widget.selfCallerId,
                           calleeId: remoteCallerIdTextEditingController.text,
+                          offer: false,
                         );
                       },
                     ),
@@ -138,7 +139,7 @@ class _JoinScreenState extends State<JoinScreen> {
                           _joinCall(
                             callerId: incomingSDPOffer["callerId"]!,
                             calleeId: widget.selfCallerId,
-                            offer: incomingSDPOffer["sdpOffer"],
+                            offer: true,
                           );
                         },
                       )
